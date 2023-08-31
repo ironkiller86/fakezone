@@ -1,11 +1,11 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
+import { component$, Slot, useContext, useTask$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
-
 import Header from "~/components/starter/header/header";
 import Footer from "~/components/starter/footer/footer";
-
-import styles from "./styles.css?inline";
+import { CTX } from "../components/context";
+import type { Product } from "~/types";
+import SpinnerWrapper from "~/components/spinnerWrapper";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -24,15 +24,54 @@ export const useServerTimeLoader = routeLoader$(() => {
   };
 });
 
+export const useProducts = routeLoader$(async () => {
+  console.log("useProducts");
+  // This code runs only on the server, after every navigation
+  const res = await fetch(`http://localhost:3000/products`);
+  const products = await res.json();
+  return products as Product[];
+});
+
+export const useEcommerceData = routeLoader$(async (requestEvent) => {
+  console.log("useEcommerceData");
+  // This code runs only on the server, after every navigation
+  const products = await requestEvent.resolveValue(useProducts);
+  const res = await fetch(`http://localhost:3000/allCategory`);
+  const allCategories = await res.json();
+  return {
+    allCategories: allCategories as String[],
+    products: products as Product[],
+  };
+});
+
 export default component$(() => {
-  useStyles$(styles);
+  const ctxObj = useContext(CTX);
+  const data = useEcommerceData();
+  console.log("Products", data.value.allCategories);
+  const serializableCategories = [...data.value.allCategories].map((item) =>
+    item.toString()
+  );
+
+  const products = data.value.products;
+  useTask$(async (/* { track } */) => {
+    ctxObj.allCategory = serializableCategories;
+    ctxObj.products = products;
+  });
+
+  console.log("ctxObj.isLoading", ctxObj.isLoading);
+
   return (
-    <>
-    
+    <div class='bg-gray-300 flex flex-col min-h-screen'>
+      {ctxObj.isLoading && (
+        <SpinnerWrapper>
+          <div class="w-12 h-12 rounded-full animate-spin border-3 border-solid border-blue-500 border-t-transparent" />
+        </SpinnerWrapper>
+      )}
+      <Header />
       <main>
         <Slot />
       </main>
       <Footer />
-    </>
+    </div>
   );
 });
