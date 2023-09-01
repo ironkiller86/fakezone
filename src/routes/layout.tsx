@@ -44,6 +44,8 @@ export const useEcommerceData = routeLoader$(async (requestEvent) => {
   };
 });
 
+
+
 export default component$(() => {
   const ctxObj = useContext(CTX);
   const data = useEcommerceData();
@@ -61,7 +63,7 @@ export default component$(() => {
   console.log("ctxObj.isLoading", ctxObj.isLoading);
 
   return (
-    <div class='bg-gray-300 flex flex-col min-h-screen'>
+    <div class="bg-gray-300 flex flex-col min-h-screen">
       {ctxObj.isLoading && (
         <SpinnerWrapper>
           <div class="w-12 h-12 rounded-full animate-spin border-3 border-solid border-blue-500 border-t-transparent" />

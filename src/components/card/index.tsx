@@ -7,8 +7,8 @@ type ProductCard = Omit<Product, "description" | "category">;
 
 export default component$<ProductCard>(
   ({ id, title, image, price, rating }) => (
-    <div class="w-[18rem] bg-white border border-gray-200 rounded-md flex flex-col p-3">
-      <div class="">
+    <div class="w-[18rem] bg-white border border-gray-200 rounded-md flex flex-col p-3 hover:scale-105">
+      <div>
         <Link href={`/detail/${id}`}>
           <Image
             src={image}

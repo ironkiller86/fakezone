@@ -6,7 +6,7 @@ import SearchForm from "~/components/SearchForm/searchForm";
 
 export default component$(() => {
   return (
-    <header class="bg-[#131921] text-white px-6 py-3">
+    <header class="bg-[#131921] text-white px-6 py-3 fixed w-full">
       <nav class="flex flex-row items-center gap-12">
         <Link href="/" title="qwik">
           <h1 class="font-bold text-2xl">Fakezone</h1>
@@ -25,8 +25,11 @@ export default component$(() => {
               title="cart"
               class="flex  items-center justify-betweens font-semibold"
             >
-              <FakezoneLogo width={50} />
-              <p>Carrello</p>
+              <div class='relative flex items-center'>
+                <p class='absolute left-[22px] top-[-10px] text-orange-400 text-md'>4</p>
+                <FakezoneLogo width={50} />
+                <p>Carrello</p>
+              </div>
             </Link>
           </li>
         </ul>
