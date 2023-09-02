@@ -23,7 +23,7 @@ export default component$(() => {
 
           <li>
             <Link
-              href="/"
+              href="/cart"
               title="cart"
               class="flex  items-center justify-betweens font-semibold"
             >
