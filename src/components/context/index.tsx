@@ -14,6 +14,7 @@ export default component$(() => {
     {
       allCategory: [],
       products: [],
+      cart: [],
       isLoading: false,
     }
     /*    { deep: false } */

@@ -2,12 +2,31 @@ import { component$, useContext, useStore, $ } from "@builder.io/qwik";
 import { HiMagnifyingGlassMini } from "@qwikest/icons/heroicons";
 import { CTX } from "../context";
 import type { SearchedField } from "~/types";
+import { useLocation, useNavigate } from "@builder.io/qwik-city";
+import { server$ } from "@builder.io/qwik-city";
 
-/* import { server$ } from '@builder.io/qwik-city'; */
+const searchData = server$(async (formData: SearchedField) => {
+  let res;
+  if (formData.category === "All category") {
+    res = await fetch(
+      `http://localhost:3000/products?q=${formData.productName}`
+    );
+  } else {
+    res = await fetch(
+      `http://localhost:3000/products?q=${formData.productName}&category=${
+        formData.category === "All category" ? "" : formData.category
+      }`
+    );
+  }
+  const data = await res.json();
+  return { products: data };
+});
 
 export default component$(() => {
   const contextData = useContext(CTX);
   const formData = useStore<SearchedField>({ category: "", productName: "" });
+  const nav = useNavigate();
+  const loc = useLocation();
 
   const handlerSearchField = $((evt: Event) => {
     formData.productName = (evt.target as HTMLInputElement).value;
@@ -16,31 +35,34 @@ export default component$(() => {
     formData.category = (evt.target as HTMLInputElement).value;
   });
 
+  const handlerSubmit = $(async () => {
+    contextData.isLoading = true;
+    const { products } = await searchData(formData);
+    /*    let res;
+    if (formData.category === "All category") {
+      res = await fetch(
+        `http://localhost:3000/products?q=${formData.productName}`
+      );
+    } else {
+      res = await fetch(
+        `http://localhost:3000/products?q=${formData.productName}&category=${
+          formData.category === "All category" ? "" : formData.category
+        }`
+      );
+    }
+    const data = await res.json(); 
+    contextData.products = data;*/
+    contextData.products = products;
+    contextData.isLoading = false;
+    if (loc.url.pathname !== "/") {
+      nav("/");
+    }
+  });
+
   return (
     <form
       preventdefault:submit
-      onsubmit$={async () => {
-        console.log(formData);
-        contextData.isLoading = true;
-        let res;
-        if (formData.category === "All category") {
-          res = await fetch(
-            `http://localhost:3000/products?q=${formData.productName}`
-          );
-        } else {
-          res = await fetch(
-            `http://localhost:3000/products?q=${
-              formData.productName
-            }&category=${
-              formData.category === "All category" ? "" : formData.category
-            }`
-          );
-        }
-        const data = await res.json();
-        console.log("onsubmit", data);
-        contextData.products = data;
-        contextData.isLoading = false
-      }}
+      onsubmit$={handlerSubmit}
       class="flex  gap-2 text-black h-10 w-full rounded-sm"
     >
       <select

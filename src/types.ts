@@ -1,7 +1,12 @@
+type Cart = Required<Product> & {
+  qt: number;
+};
+
 export type Store = {
   allCategory: string[];
   products: Product[];
   isLoading: boolean;
+  cart: Cart[];
 };
 
 export type Product = {

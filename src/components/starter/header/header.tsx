@@ -1,10 +1,12 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useContext } from "@builder.io/qwik";
 import { FakezoneLogo } from "../icons/cart";
 import { Link } from "@builder.io/qwik-city";
 
 import SearchForm from "~/components/SearchForm/searchForm";
+import { CTX } from "~/components/context";
 
 export default component$(() => {
+  const ctxObj = useContext(CTX);
   return (
     <header class="bg-[#131921] text-white px-6 py-3 fixed w-full">
       <nav class="flex flex-row items-center gap-12">
@@ -25,8 +27,10 @@ export default component$(() => {
               title="cart"
               class="flex  items-center justify-betweens font-semibold"
             >
-              <div class='relative flex items-center'>
-                <p class='absolute left-[22px] top-[-10px] text-orange-400 text-md'>4</p>
+              <div class="relative flex items-center">
+                <p class="absolute left-[22px] top-[-10px] text-orange-400 text-md">
+                  {ctxObj.cart.length}
+                </p>
                 <FakezoneLogo width={50} />
                 <p>Carrello</p>
               </div>

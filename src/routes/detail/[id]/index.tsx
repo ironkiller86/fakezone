@@ -1,9 +1,10 @@
-import { Resource, component$, useVisibleTask$ } from "@builder.io/qwik";
+import { Resource, component$, useContext, useSignal } from "@builder.io/qwik";
 import { Image } from "@unpic/qwik";
-import { Form, Link, routeAction$, routeLoader$ } from "@builder.io/qwik-city";
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import SpinnerWrapper from "~/components/spinnerWrapper";
 
 import type { Product } from "~/types";
+import { CTX } from "~/components/context";
 
 export const useProductDetails = routeLoader$(async (requestEvent) => {
   console.log("useProductDetails", requestEvent.params);
@@ -15,7 +16,9 @@ export const useProductDetails = routeLoader$(async (requestEvent) => {
   return product as Product;
 });
 
-export const useAddCart = routeAction$(async (data) => {
+const QUANTITY = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
+/* export const useAddCart = routeAction$(async (data) => {
   console.log("useAddCart", data);
   const res = await fetch(`http://localhost:3000/cart`, {
     method: "POST",
@@ -25,20 +28,13 @@ export const useAddCart = routeAction$(async (data) => {
     body: JSON.stringify(data.data),
   });
   console.log(res);
-  // This will only run on the server when the user submits the form (or when the action is called programmatically)
-  /*   const userID = await db.users.add({
-    firstName: data.firstName,
-    lastName: data.lastName,
-  });
-  return {
-    success: true,
-    userID,
-  }; */
-});
 
+});
+ */
 export default component$(() => {
   const product = useProductDetails();
-  const action = useAddCart();
+  const ctxObj = useContext(CTX);
+  const qt = useSignal("1");
 
   /*   useVisibleTask$(() => {
     console.log(">>>>>>>>>>>>>>", product.value);
@@ -109,24 +105,27 @@ export default component$(() => {
                   <div /* action={action} */ class="mt-4 flex flex-col h-full">
                     <div class="flex gap-3 items-center">
                       <p>Quantità:</p>
-                      <select class="border-[1px] w-10">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                      <select bind:value={qt} class="border-[1px] w-10">
+                        {QUANTITY.map((qt) => (
+                          <option key={qt}>{qt}</option>
+                        ))}
                       </select>
                     </div>
                     <div class="flex flex-col mt-auto">
                       <button
-                        onClick$={async () =>
-                          await action.submit({ qt: 3, data: product })
+                        onClick$={() =>
+                          ctxObj.cart.push({
+                            ...product,
+                            qt: parseInt(qt.value),
+                          })
                         }
-                        class="justify-self-center bg-[#febd69] py-2 rounded-xl mt-4 hover:opacity-90 "
+                        class="justify-self-center bg-[#febd69] py-2 rounded-xl mt-4 hover:opacity-90 active:outline outline-2 outline-blue-400 outline-offset-2"
                       >
                         Aggiungi al Carrello
                       </button>
                       <div class="flex gap-5 mt-10 text-xs ">
                         <p class="text-gray-500  min-w-[4rem]">Pagamento</p>
-                        <p>Transazione sicura</p>
+                        <p class="text-[#007185] ">Transazione sicura</p>
                       </div>
                       <div class="flex gap-5 text-xs mt-1">
                         <p class="text-gray-500  min-w-[4rem]">Spedizione</p>

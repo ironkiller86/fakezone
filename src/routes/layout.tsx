@@ -31,20 +31,27 @@ export const useProducts = routeLoader$(async () => {
   const products = await res.json();
   return products as Product[];
 });
+/* export const useCart = routeLoader$(async () => {
+  console.log("useProducts");
+  // This code runs only on the server, after every navigation
+  const res = await fetch(`http://localhost:3000/cart`);
+  const cart = await res.json();
+  return cart as Product[];
+}); */
 
 export const useEcommerceData = routeLoader$(async (requestEvent) => {
   console.log("useEcommerceData");
   // This code runs only on the server, after every navigation
   const products = await requestEvent.resolveValue(useProducts);
+  /*  const cart = await requestEvent.resolveValue(useCart); */
   const res = await fetch(`http://localhost:3000/allCategory`);
   const allCategories = await res.json();
   return {
     allCategories: allCategories as String[],
     products: products as Product[],
+    /*  cart: cart as Product[], */
   };
 });
-
-
 
 export default component$(() => {
   const ctxObj = useContext(CTX);
@@ -55,6 +62,7 @@ export default component$(() => {
   );
 
   const products = data.value.products;
+  console.log(ctxObj.cart);
   useTask$(async (/* { track } */) => {
     ctxObj.allCategory = serializableCategories;
     ctxObj.products = products;
@@ -63,10 +71,10 @@ export default component$(() => {
   console.log("ctxObj.isLoading", ctxObj.isLoading);
 
   return (
-    <div class="bg-gray-300 flex flex-col min-h-screen">
+    <div class="bg-gray-300 flex flex-col min-h-screen relative">
       {ctxObj.isLoading && (
         <SpinnerWrapper>
-          <div class="w-12 h-12 rounded-full animate-spin border-3 border-solid border-blue-500 border-t-transparent" />
+          <div class="w-12 h-12 rounded-full animate-spin border-3 border-solid border-blue-500 border-t-transparent " />
         </SpinnerWrapper>
       )}
       <Header />
