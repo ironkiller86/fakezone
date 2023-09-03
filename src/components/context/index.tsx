@@ -15,7 +15,7 @@ export default component$(() => {
       allCategory: [],
       products: [],
       cart: [
-        {
+      /*   {
           qt: 1,
           id: 20,
           title: "DANVOUY Womens T Shirt Casual Cotton Short",
@@ -29,7 +29,7 @@ export default component$(() => {
             count: 145,
           
           },
-        },
+        }, */
       ],
       isLoading: false,
     }
