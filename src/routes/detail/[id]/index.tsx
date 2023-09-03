@@ -16,7 +16,7 @@ export const useProductDetails = routeLoader$(async (requestEvent) => {
   return product as Product;
 });
 
-const QUANTITY = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+export const QUANTITY = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 /* export const useAddCart = routeAction$(async (data) => {
   console.log("useAddCart", data);
