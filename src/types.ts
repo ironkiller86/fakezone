@@ -1,4 +1,4 @@
-type Cart = Required<Product> & {
+export type Cart = Required<Product> & {
   qt: number;
 };
 

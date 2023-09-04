@@ -84,3 +84,34 @@ html {
     "Segoe UI Symbol",
     "Noto Color Emoji";
 }
+
+@media (min-width: 1200px) {
+  /* Regole CSS per dispositivi desktop di grandi dimensioni */
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Regole CSS per dispositivi desktop di dimensioni medie */
+  html {
+    font-size: 15px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Regole CSS per dispositivi desktop di piccole dimensioni o laptop */
+  html {
+    font-size: 14px;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  /* Regole CSS per tablet e dispositivi a schermo largo */
+  html {
+    font-size: 13px;
+  }
+}
+@media (max-width: 480px) {
+  /* Regole CSS per dispositivi mobili e smartphone */
+  html {
+    font-size: 12.5px;
+  }
+}
