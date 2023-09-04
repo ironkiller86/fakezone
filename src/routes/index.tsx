@@ -7,7 +7,7 @@ export default component$(() => {
   const ctxObj = useContext(CTX);
   return (
     <>
-      <main class="m-auto w-[80%]  flex flex-wrap gap-3 mt-20 mb-3 justify-center" >
+      <main class="m-auto w-[80%]  flex flex-wrap gap-3 mt-20  justify-center mb-24" >
         {ctxObj.products.map((product) => (
           <Card key={product.id} {...product} />
         ))}

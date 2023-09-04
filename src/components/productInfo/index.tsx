@@ -60,7 +60,7 @@ export default component$<ProductInfoProps>(({ product, cart, addProduct }) => {
               label="Aggiungi al Carrello"
               action={$(() => {
                 addProduct(qt.value);
-                nav('/')
+                nav('/cart')
               })}
             />
             <div class="flex gap-5 mt-10 text-xs ">
