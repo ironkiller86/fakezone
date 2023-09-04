@@ -1,14 +1,14 @@
 import { component$, useContext, $, useComputed$ } from "@builder.io/qwik";
 import { CTX } from "~/components/context";
-import Button from "~/components/Button";
-import CartItem from "~/components/cartItem";
+import Button from "~/components/button";
+import CartResumeItem from "~/components/cartResumeItem";
 
 export default component$(() => {
   const ctxObj = useContext(CTX);
 
   const totalCartAmount = useComputed$(() =>
     ctxObj.cart.reduce((accumulator, currentValue) => {
-      const totalPrice = (parseFloat(currentValue.price) * currentValue.qt)
+      const totalPrice = parseFloat(currentValue.price) * currentValue.qt;
       return accumulator + totalPrice;
     }, 0)
   );
@@ -39,7 +39,11 @@ export default component$(() => {
         <div class="border-t-[1px] border-gray-200 w-full my-2" />
         {ctxObj.cart.map((itemCart) => (
           <>
-          <CartItem itemCart={itemCart} editItemQty={editItemQty} removeItem={removeItem}/>
+            <CartResumeItem
+              itemCart={itemCart}
+              editItemQty={editItemQty}
+              removeItem={removeItem}
+            />
             <div class="border-t-[1px] border-gray-200 w-full mt-6" />
           </>
         ))}
@@ -48,7 +52,7 @@ export default component$(() => {
             Totale provvisorio ({ctxObj.cart.length}
             {ctxObj.cart.length > 1 ? " articoli" : " articolo"})
           </p>
-          <p class="font-bold">{totalCartAmount.value} $</p>
+          <p class="font-bold">{totalCartAmount.value.toFixed(2)} $</p>
         </div>
       </div>
       <div class="min-w-[20rem]  bg-white flex flex-col h-[8.5rem] p-5 ">
@@ -56,7 +60,7 @@ export default component$(() => {
           {`Totale provvisorio (${ctxObj.cart.length} ${
             ctxObj.cart.length > 1 ? " articoli" : " articolo"
           }): `}
-          <span class="font-bold">{totalCartAmount.value} $</span>
+          <span class="font-bold">{totalCartAmount.value.toFixed(2)} $</span>
         </p>
 
         <Button label="Procedi all`ordine" action={confirmOrder} />

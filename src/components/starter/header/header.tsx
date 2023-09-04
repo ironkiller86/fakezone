@@ -2,8 +2,9 @@ import { component$, useContext } from "@builder.io/qwik";
 import { FakezoneLogo } from "../icons/cart";
 import { Link } from "@builder.io/qwik-city";
 
-import SearchForm from "~/components/SearchForm/searchForm";
+import SearchForm from "~/components/searchForm/searchForm";
 import { CTX } from "~/components/context";
+import { User } from "../icons/user";
 
 export default component$(() => {
   const ctxObj = useContext(CTX);
@@ -16,8 +17,9 @@ export default component$(() => {
         <SearchForm />
         <ul class="flex items-center font-[400] gap-10">
           <li>
-            <Link href="https://qwik.builder.io/docs/components/overview/">
-              <p class="text-sm font-semibold">Ciao Donato</p>
+            <Link href="#">
+              {/*  <p class="text-sm font-semibold">Ciao Donato</p> */}
+              <User />
             </Link>
           </li>
 

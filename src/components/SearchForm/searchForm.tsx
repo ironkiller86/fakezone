@@ -38,20 +38,6 @@ export default component$(() => {
   const handlerSubmit = $(async () => {
     contextData.isLoading = true;
     const { products } = await searchData(formData);
-    /*    let res;
-    if (formData.category === "All category") {
-      res = await fetch(
-        `http://localhost:3000/products?q=${formData.productName}`
-      );
-    } else {
-      res = await fetch(
-        `http://localhost:3000/products?q=${formData.productName}&category=${
-          formData.category === "All category" ? "" : formData.category
-        }`
-      );
-    }
-    const data = await res.json(); 
-    contextData.products = data;*/
     contextData.products = products;
     contextData.isLoading = false;
     if (loc.url.pathname !== "/") {

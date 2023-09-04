@@ -56,19 +56,17 @@ export const useEcommerceData = routeLoader$(async (requestEvent) => {
 export default component$(() => {
   const ctxObj = useContext(CTX);
   const data = useEcommerceData();
-  console.log("Products", data.value.allCategories);
+  /*  console.log("Products", data.value.allCategories); */
   const serializableCategories = [...data.value.allCategories].map((item) =>
     item.toString()
   );
 
   const products = data.value.products;
-  console.log(ctxObj.cart);
+  console.log('cart:',ctxObj.cart);
   useTask$(async (/* { track } */) => {
     ctxObj.allCategory = serializableCategories;
     ctxObj.products = products;
   });
-
-  console.log("ctxObj.isLoading", ctxObj.isLoading);
 
   return (
     <div class="bg-gray-300 flex flex-col min-h-screen relative">
