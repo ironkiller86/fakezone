@@ -1,8 +1,8 @@
 import { component$, Slot, useContext, useTask$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
-import Header from "~/components/starter/header/header";
-import Footer from "~/components/starter/footer/footer";
+import Header from "~/components/header/header";
+import Footer from "~/components/footer/footer";
 import { CTX } from "../components/context";
 import type { Product } from "~/types";
 import SpinnerWrapper from "~/components/spinnerWrapper";
@@ -49,7 +49,6 @@ export const useEcommerceData = routeLoader$(async (requestEvent) => {
   return {
     allCategories: allCategories as String[],
     products: products as Product[],
-    /*  cart: cart as Product[], */
   };
 });
 
@@ -62,7 +61,7 @@ export default component$(() => {
   );
 
   const products = data.value.products;
-  console.log('cart:',ctxObj.cart);
+  console.log("cart:", ctxObj.cart);
   useTask$(async (/* { track } */) => {
     ctxObj.allCategory = serializableCategories;
     ctxObj.products = products;
