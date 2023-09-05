@@ -2,8 +2,7 @@ import { component$, useContext, useStore, $ } from "@builder.io/qwik";
 import { HiMagnifyingGlassMini } from "@qwikest/icons/heroicons";
 import { CTX } from "../context";
 import type { Product, SearchedField } from "~/types";
-import { useLocation, useNavigate } from "@builder.io/qwik-city";
-import { server$ } from "@builder.io/qwik-city";
+import { useLocation, useNavigate, server$ } from "@builder.io/qwik-city";
 
 const searchData = server$(async (formData: SearchedField) => {
   const url = `http://localhost:5173/api/store?${

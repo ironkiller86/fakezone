@@ -2,7 +2,7 @@ import { component$, useContext } from "@builder.io/qwik";
 import { FakezoneLogo } from "../icons/cart";
 import { Link } from "@builder.io/qwik-city";
 
-import SearchForm from "~/components/searchForm/searchForm";
+import SearchForm from "../searchForm/searchForm";
 import { CTX } from "~/components/context";
 import { User } from "../icons/user";
 
