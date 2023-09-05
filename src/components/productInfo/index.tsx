@@ -4,7 +4,7 @@ import { Link, useNavigate } from "@builder.io/qwik-city";
 
 import { QUANTITY } from "~/routes/detail/[id]";
 import type { Cart, Product } from "~/types";
-import Button from "../button";
+import MainButton from "../mainButton";
 
 type ProductInfoProps = {
   product: Product;
@@ -57,7 +57,7 @@ export default component$<ProductInfoProps>(({ product, cart, addProduct }) => {
             </select>
           </div>
           <div class="mt-5 flex flex-col sm:mt-auto">
-            <Button
+            <MainButton
               label="Aggiungi al Carrello"
               action={$(() => {
                 addProduct(qt.value);

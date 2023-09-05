@@ -1,7 +1,8 @@
 import { component$, useContext, $, useComputed$ } from "@builder.io/qwik";
 import { CTX } from "~/components/context";
 import CartResumeItem from "~/components/cartResumeItem";
-import Button from "../../components/button";
+import MainButton from "~/components/mainButton";
+
 
 export default component$(() => {
   const ctxObj = useContext(CTX);
@@ -62,7 +63,7 @@ export default component$(() => {
           <span class="font-bold">{totalCartAmount.value.toFixed(2)} $</span>
         </p>
 
-        <Button label="Procedi all`ordine" action={confirmOrder} />
+        <MainButton label="Procedi all`ordine" action={confirmOrder} />
       </div>
     </main>
   );
