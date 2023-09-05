@@ -6,6 +6,7 @@ import SearchForm from "~/components/searchForm/searchForm";
 import { CTX } from "~/components/context";
 import { User } from "../icons/user";
 
+
 export default component$(() => {
   const ctxObj = useContext(CTX);
   return (
