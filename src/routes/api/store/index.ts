@@ -1,10 +1,10 @@
 import { type RequestHandler } from "@builder.io/qwik-city";
-import { readFileSync } from "fs";
+import fs from "fs";
 import type { Product } from "~/types";
 
 export const onGet: RequestHandler = async ({ json, query }) => {
   try {
-    const data = readFileSync("db.json");
+    const data = fs.readFileSync("db.json");
     const category = query.get("category") || "allCategory";
     const productName = query.get("productName")?.toLowerCase();
     const store = JSON.parse(data.toString());
