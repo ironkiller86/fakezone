@@ -12,7 +12,7 @@ export default defineConfig(() => {
       },
     },
     ssr: {
-    noExternal: ['fs'],
+    noExternal: false,
   },
   };
 });
