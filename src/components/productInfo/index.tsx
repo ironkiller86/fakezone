@@ -1,9 +1,10 @@
 import { component$, useSignal, $, useTask$, } from "@builder.io/qwik";
 import type { PropFunction } from "@builder.io/qwik";
 import { Link, useNavigate } from "@builder.io/qwik-city";
-import Button from "~/components/button";
+
 import { QUANTITY } from "~/routes/detail/[id]";
 import type { Cart, Product } from "~/types";
+import Button from "../button";
 
 type ProductInfoProps = {
   product: Product;
