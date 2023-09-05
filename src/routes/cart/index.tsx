@@ -1,7 +1,7 @@
 import { component$, useContext, $, useComputed$ } from "@builder.io/qwik";
 import { CTX } from "~/components/context";
 import CartResumeItem from "~/components/cartResumeItem";
-import Button from "~/components/button";
+import Button from "~/components/button/index";
 
 export default component$(() => {
   const ctxObj = useContext(CTX);
