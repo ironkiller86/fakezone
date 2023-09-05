@@ -18,7 +18,6 @@ export default component$(() => {
   });
 
   const editItemQty = $((event: Event, productId: number) => {
-    console.log((event.target as HTMLInputElement).value);
     const newProductQty = (event.target as HTMLInputElement).value;
     ctxObj.cart.map((item) => {
       if (item.id === productId) {
@@ -31,7 +30,7 @@ export default component$(() => {
   const confirmOrder = $(() => console.log("fine"));
 
   return (
-    <main class="m-auto w-[80%] mt-32 mb-3 px-5 py-7 flex gap-6 min-w-[50rem]">
+    <main class="flex flex-col m-auto w-[80%] mt-32 mb-3 px-5 py-7 sm:flex sm:flex-row gap-6 sm:min-w-[50rem]">
       <div class="w-full  bg-white p-5">
         <p class=" text-[#0F1111] font-medium leading-7 text-[1.8rem]">
           Carrello
@@ -55,7 +54,7 @@ export default component$(() => {
           <p class="font-bold">{totalCartAmount.value.toFixed(2)} $</p>
         </div>
       </div>
-      <div class="min-w-[20rem]  bg-white flex flex-col h-[8.5rem] p-5 ">
+      <div class="min-w-[20rem] mb-10 sm:mt-0 bg-white flex flex-col h-[8.5rem] p-5 ">
         <p class="text-lg max-w-[12rem] font-semibold mb-2">
           {`Totale provvisorio (${ctxObj.cart.length} ${
             ctxObj.cart.length > 1 ? " articoli" : " articolo"

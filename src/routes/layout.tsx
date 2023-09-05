@@ -18,34 +18,11 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
   });
 };
 
-export const useServerTimeLoader = routeLoader$(() => {
-  return {
-    date: new Date().toISOString(),
-  };
-});
-
-export const useProducts = routeLoader$(async () => {
-  console.log("useProducts");
-  // This code runs only on the server, after every navigation
-  const res = await fetch(`http://localhost:3000/products`);
-  const products = await res.json();
-  return products as Product[];
-});
-/* export const useCart = routeLoader$(async () => {
-  console.log("useProducts");
-  // This code runs only on the server, after every navigation
-  const res = await fetch(`http://localhost:3000/cart`);
-  const cart = await res.json();
-  return cart as Product[];
-}); */
-
-export const useEcommerceData = routeLoader$(async (requestEvent) => {
-  console.log("useEcommerceData");
-  // This code runs only on the server, after every navigation
-  const products = await requestEvent.resolveValue(useProducts);
-  /*  const cart = await requestEvent.resolveValue(useCart); */
-  const res = await fetch(`http://localhost:3000/allCategory`);
-  const allCategories = await res.json();
+export const useEcommerceData = routeLoader$(async () => {
+  const res = await fetch(`http://localhost:5173/api/store`);
+  const store = await res.json();
+  const products = store.response.products;
+  const allCategories = store.response.allCategory;
   return {
     allCategories: allCategories as String[],
     products: products as Product[],
@@ -55,14 +32,12 @@ export const useEcommerceData = routeLoader$(async (requestEvent) => {
 export default component$(() => {
   const ctxObj = useContext(CTX);
   const data = useEcommerceData();
-  /*  console.log("Products", data.value.allCategories); */
   const serializableCategories = [...data.value.allCategories].map((item) =>
     item.toString()
   );
 
   const products = data.value.products;
-  console.log("cart:", ctxObj.cart);
-  useTask$(async (/* { track } */) => {
+  useTask$(async () => {
     ctxObj.allCategory = serializableCategories;
     ctxObj.products = products;
   });

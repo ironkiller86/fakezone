@@ -1,25 +1,21 @@
 import { component$, useContext, useStore, $ } from "@builder.io/qwik";
 import { HiMagnifyingGlassMini } from "@qwikest/icons/heroicons";
 import { CTX } from "../context";
-import type { SearchedField } from "~/types";
+import type { Product, SearchedField } from "~/types";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import { server$ } from "@builder.io/qwik-city";
 
 const searchData = server$(async (formData: SearchedField) => {
-  let res;
-  if (formData.category === "All category") {
-    res = await fetch(
-      `http://localhost:3000/products?q=${formData.productName}`
-    );
-  } else {
-    res = await fetch(
-      `http://localhost:3000/products?q=${formData.productName}&category=${
-        formData.category === "All category" ? "" : formData.category
-      }`
-    );
-  }
+  const url = `http://localhost:5173/api/store?${
+    formData.category ? `category=${formData.category}` : "category=allCategory"
+  }${formData.productName ? `&productName=${formData.productName}` : ""} `;
+  const res = await fetch(url);
   const data = await res.json();
-  return { products: data };
+  if (Array.isArray(data.response.products)) {
+    return {
+      products: data.response.products as Product[],
+    };
+  } else return { products: [] };
 });
 
 export default component$(() => {
@@ -55,7 +51,7 @@ export default component$(() => {
         onInput$={handlerSelectCategory}
         class="rounded-sm  focus:outline-[#febd69] outline-offset-1 outline-1 font- "
       >
-        <option selected value={"All category"}>
+        <option selected value={"allCategory"}>
           All category
         </option>
         {contextData.allCategory.map((category) => (

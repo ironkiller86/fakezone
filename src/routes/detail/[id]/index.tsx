@@ -14,30 +14,27 @@ import { CTX } from "~/components/context";
 import ProductInfo from "~/components/productInfo";
 import ProductDescription from "~/components/productDescription";
 
-export const useProductDetails = routeLoader$(async (requestEvent) => {
+/* export const useProductDetails = routeLoader$(async (requestEvent) => {
   const res = await fetch(
     `http://localhost:3000/products/${requestEvent.params.id}`
   );
   const product = await res.json();
-  /*  console.log(product); */
+
+  return product as Product;
+}); */
+export const useProductDetails = routeLoader$(async (requestEvent) => {
+  const res = await fetch(`http://localhost:5173/api/store`);
+  const store = await res.json();
+  const products: Product[] = store.response.products;
+  const product = products.find(
+    (product) => product.id === parseInt(requestEvent.params.id)
+  );
+
   return product as Product;
 });
 
 export const QUANTITY = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
-/* export const useAddCart = routeAction$(async (data) => {
-  console.log("useAddCart", data);
-  const res = await fetch(`http://localhost:3000/cart`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data.data),
-  });
-  console.log(res);
-
-});
- */
 export default component$(() => {
   const product = useProductDetails();
   const ctxObj = useContext(CTX);
@@ -62,7 +59,7 @@ export default component$(() => {
 
   return (
     <section class="mt-20 mb-3 flex items-center justify-center">
-      <main class="m-auto w-[80%]  flex flex-wrap gap-3 mt-20 mb-3 justify-center">
+      <main class="mb-20 m-auto w-[80%]  flex flex-wrap gap-3 mt-20 sm:mb-3 justify-center ">
         <Resource
           value={product}
           onPending={() => (
@@ -72,7 +69,7 @@ export default component$(() => {
           )}
           onRejected={() => <p>error</p>}
           onResolved={(product) => (
-            <section class="mt-16 flex gap-2  items-center bg-white min-h-[30rem] rounded-md px-2 relative">
+            <section class=" flex-col mt-16 flex sm:flex-row gap-2  items-center bg-white min-h-[30rem] rounded-md px-2 relative ">
               {viewOnly.value && (
                 <div class="absolute left-0 top-0 h-full w-full bg-white opacity-40 hover:cursor-not-allowed" />
               )}

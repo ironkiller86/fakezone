@@ -14,7 +14,7 @@ type CartItemProps = {
 export default component$<CartItemProps>(
   ({ itemCart, removeItem, editItemQty }) => {
     return (
-      <section class="flex items-center gap-4">
+      <section class="flex flex-col  sm:flex sm:items-center sm:flex-row gap-4">
         <Link key={itemCart.id} href={`/detail/${itemCart.id}`}>
           <Image
             src={itemCart.image || ""}

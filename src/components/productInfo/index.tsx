@@ -55,7 +55,7 @@ export default component$<ProductInfoProps>(({ product, cart, addProduct }) => {
               ))}
             </select>
           </div>
-          <div class="flex flex-col mt-auto">
+          <div class="mt-5 flex flex-col sm:mt-auto">
             <Button
               label="Aggiungi al Carrello"
               action={$(() => {
