@@ -12,7 +12,7 @@ export default defineConfig(() => {
       },
     },
     ssr: {
-    noExternal: false,
+    noExternal: 'true'
   },
   };
 });
