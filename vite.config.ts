@@ -11,8 +11,12 @@ export default defineConfig(() => {
         "Cache-Control": "public, max-age=600",
       },
     },
-    ssr:{
-      external: ['fs'],
-     },
+    build: {
+      rollupOptions: {
+          external: [
+              'fs'
+          ]
+      }
+  },
   };
 });
