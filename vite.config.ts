@@ -11,16 +11,8 @@ export default defineConfig(() => {
         "Cache-Control": "public, max-age=600",
       },
     },
-    server: {
-      fs: {
-        allow: [
-          // search up for workspace root
-          searchForWorkspaceRoot(process.cwd()),
-          // your custom rules
-          '/db.json',
-          
-        ],
-      },
-    },
+    ssr:{
+      noExternal: 'fs',
+     },
   };
 });
