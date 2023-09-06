@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, searchForWorkspaceRoot } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -9,6 +9,17 @@ export default defineConfig(() => {
     preview: {
       headers: {
         "Cache-Control": "public, max-age=600",
+      },
+    },
+    server: {
+      fs: {
+        allow: [
+          // search up for workspace root
+          searchForWorkspaceRoot(process.cwd()),
+          // your custom rules
+          '/db.json',
+          
+        ],
       },
     },
   };
