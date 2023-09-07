@@ -1,8 +1,8 @@
 import { component$, useContext, useStore, $ } from "@builder.io/qwik";
 import { HiMagnifyingGlassMini } from "@qwikest/icons/heroicons";
 import { CTX } from "../context";
-import type { Product, SearchedField } from "~/types";
-import { useLocation, useNavigate, server$ } from "@builder.io/qwik-city";
+import type { SearchedField } from "~/types";
+import { useLocation, useNavigate } from "@builder.io/qwik-city";
 
 /* const searchData = server$(async (formData: SearchedField) => {
   const url = `http://localhost:5173/api/store?${
@@ -31,7 +31,7 @@ export default component$(() => {
   });
 
   const handlerSubmit = $(async () => {
- /*    contextData.isLoading = true;
+    /*    contextData.isLoading = true;
     const { products } = await searchData(formData);
     contextData.products = products;
     contextData.isLoading = false; */
