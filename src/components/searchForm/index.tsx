@@ -1,24 +1,44 @@
 import { component$, useContext, useStore, $ } from "@builder.io/qwik";
 import { HiMagnifyingGlassMini } from "@qwikest/icons/heroicons";
 import { CTX } from "../context";
-import type { SearchedField } from "~/types";
-import { useLocation, useNavigate } from "@builder.io/qwik-city";
+import type { Product, SearchedField } from "~/types";
+import { server$, useLocation, useNavigate } from "@builder.io/qwik-city";
 
-/* const searchData = server$(async (formData: SearchedField) => {
-  const url = `http://localhost:5173/api/store?${
-    formData.category ? `category=${formData.category}` : "category=allCategory"
-  }${formData.productName ? `&productName=${formData.productName}` : ""} `;
-  const res = await fetch(url);
-  const data = await res.json();
-  if (Array.isArray(data.response.products)) {
-    return {
-      products: data.response.products as Product[],
-    };
-  } else return { products: [] };
-}); */
-
-
-
+const searchData = server$(async (formData: SearchedField) => {
+  const respProducts = await fetch(
+    `https://fakezone-b76f4-default-rtdb.europe-west1.firebasedatabase.app//products.json`
+  );
+  const productsData: Product[] = await respProducts.json();
+  try {
+    const category = formData.category;
+    const productName = formData.productName.toLowerCase();
+    if (category !== "allCategory" && !productName) {
+      const data = productsData.filter((productName) =>
+        productName.category.toLowerCase().includes(category)
+      );
+      return data;
+    } else if (category === "allCategory" && productName) {
+      const data = productsData.filter(
+        (product) =>
+          product.title.toLowerCase().includes(productName) ||
+          product.description.toLowerCase().includes(productName)
+      );
+      return data;
+    } else if (category !== "allCategory" && productName) {
+      const data = productsData.filter(
+        (product) =>
+          product.category.toLowerCase().includes(category) &&
+          (product.description.toLowerCase().includes(productName) ||
+            product.title.toLowerCase().includes(productName))
+      );
+      return data;
+    } else {
+      return productsData;
+    }
+  } catch (err) {
+    return [];
+  }
+});
 
 export default component$(() => {
   const contextData = useContext(CTX);
@@ -34,10 +54,11 @@ export default component$(() => {
   });
 
   const handlerSubmit = $(async () => {
-    /*    contextData.isLoading = true;
-    const { products } = await searchData(formData);
+    contextData.isLoading = true;
+    const products = await searchData(formData);
+    console.log("products", products);
     contextData.products = products;
-    contextData.isLoading = false; */
+    contextData.isLoading = false;
     if (loc.url.pathname !== "/") {
       nav("/");
     }
