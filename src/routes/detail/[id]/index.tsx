@@ -13,23 +13,14 @@ import { CTX } from "~/components/context";
 
 import ProductInfo from "~/components/productInfo";
 import ProductDescription from "~/components/productDescription";
+import { useEcommerceData } from "~/routes/layout";
 
-/* export const useProductDetails = routeLoader$(async (requestEvent) => {
-  const res = await fetch(
-    `http://localhost:3000/products/${requestEvent.params.id}`
-  );
-  const product = await res.json();
-
-  return product as Product;
-}); */
 export const useProductDetails = routeLoader$(async (requestEvent) => {
-  const res = await fetch(`http://localhost:5173/api/store`);
-  const store = await res.json();
-  const products: Product[] = store.response.products;
+  const data = await requestEvent.resolveValue(useEcommerceData);
+  const products: Product[] = data.products;
   const product = products.find(
     (product) => product.id === parseInt(requestEvent.params.id)
   );
-
   return product as Product;
 });
 
