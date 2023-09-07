@@ -17,6 +17,9 @@ import { useLocation, useNavigate } from "@builder.io/qwik-city";
   } else return { products: [] };
 }); */
 
+
+
+
 export default component$(() => {
   const contextData = useContext(CTX);
   const formData = useStore<SearchedField>({ category: "", productName: "" });
