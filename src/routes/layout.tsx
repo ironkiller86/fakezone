@@ -19,12 +19,16 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 };
 
 export const useEcommerceData = routeLoader$(async () => {
-  const res = await fetch(`http://localhost:5173/api/store`);
-  const store = await res.json();
-  const products = store.response.products;
-  const allCategories = store.response.allCategory;
+  const respProducts = await fetch(
+    `https://fakezone-b76f4-default-rtdb.europe-west1.firebasedatabase.app//products.json`
+  );
+  const respCategories = await fetch(
+    `https://fakezone-b76f4-default-rtdb.europe-west1.firebasedatabase.app//allCategory.json`
+  );
+  const products = await respProducts.json();
+  const categories = await respCategories.json();
   return {
-    allCategories: allCategories as String[],
+    allCategories: categories as String[],
     products: products as Product[],
   };
 });

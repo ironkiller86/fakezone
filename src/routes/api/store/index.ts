@@ -1,4 +1,4 @@
-import { type RequestHandler } from "@builder.io/qwik-city";
+/* import { type RequestHandler } from "@builder.io/qwik-city";
 import { readFileSync } from "fs";
 import type { Product } from "~/types";
 
@@ -36,3 +36,4 @@ export const onGet: RequestHandler = async ({ json, query }) => {
     json(500, { response: [] });
   }
 };
+ */

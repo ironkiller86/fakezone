@@ -13,6 +13,7 @@ import { CTX } from "~/components/context";
 
 import ProductInfo from "~/components/productInfo";
 import ProductDescription from "~/components/productDescription";
+import { useEcommerceData } from "~/routes/layout";
 
 /* export const useProductDetails = routeLoader$(async (requestEvent) => {
   const res = await fetch(
@@ -23,9 +24,11 @@ import ProductDescription from "~/components/productDescription";
   return product as Product;
 }); */
 export const useProductDetails = routeLoader$(async (requestEvent) => {
-  const res = await fetch(`http://localhost:5173/api/store`);
-  const store = await res.json();
-  const products: Product[] = store.response.products;
+/*   const res = await fetch(`http://localhost:5173/api/store`); */
+  const data = await requestEvent.resolveValue(useEcommerceData);
+  console.log("data", data);
+  /* const store = await res.json(); */
+  const products: Product[] = /* store.response.products */data.products;
   const product = products.find(
     (product) => product.id === parseInt(requestEvent.params.id)
   );

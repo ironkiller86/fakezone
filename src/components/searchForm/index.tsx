@@ -4,7 +4,7 @@ import { CTX } from "../context";
 import type { Product, SearchedField } from "~/types";
 import { useLocation, useNavigate, server$ } from "@builder.io/qwik-city";
 
-const searchData = server$(async (formData: SearchedField) => {
+/* const searchData = server$(async (formData: SearchedField) => {
   const url = `http://localhost:5173/api/store?${
     formData.category ? `category=${formData.category}` : "category=allCategory"
   }${formData.productName ? `&productName=${formData.productName}` : ""} `;
@@ -15,7 +15,7 @@ const searchData = server$(async (formData: SearchedField) => {
       products: data.response.products as Product[],
     };
   } else return { products: [] };
-});
+}); */
 
 export default component$(() => {
   const contextData = useContext(CTX);
@@ -31,10 +31,10 @@ export default component$(() => {
   });
 
   const handlerSubmit = $(async () => {
-    contextData.isLoading = true;
+ /*    contextData.isLoading = true;
     const { products } = await searchData(formData);
     contextData.products = products;
-    contextData.isLoading = false;
+    contextData.isLoading = false; */
     if (loc.url.pathname !== "/") {
       nav("/");
     }
